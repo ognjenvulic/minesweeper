@@ -4,24 +4,20 @@ import counterReducer from '../features/counter/counterSlice';
 import gameBoardReducer from '../features/gameBoard/gameBoardSlice';
 import reduxWebsocket from '@giantmachines/redux-websocket';
 import { connect, send } from '@giantmachines/redux-websocket';
-
-function* helloSaga(): Generator<void, void, unknown> {
-  yield console.log('Hello Sagas!');
-}
+import rootSaga from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 const reduxWebsocketMiddleware = reduxWebsocket({
   serializer: (payload: any): string | ArrayBuffer | ArrayBufferView | Blob => {
     console.log(payload);
-    return payload
+    return payload;
   },
   deserializer: (message: any): any => {
     console.log(message);
     return message;
   },
-  dateSerializer: (date) => date.toISOString(),
+  dateSerializer: (date: any) => date.toISOString(),
 });
-
 
 export const store = configureStore({
   reducer: {
@@ -30,13 +26,14 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
+      //thunk: false,
       serializableCheck: false,//Fix for reduxWebsocket
     })
       .prepend(sagaMiddleware)
       .prepend(reduxWebsocketMiddleware),
 });
 
-sagaMiddleware.run(helloSaga);
+sagaMiddleware.run(rootSaga);
 
 console.log(process.env.WEBSOCKET_ADDR);
 store.dispatch(

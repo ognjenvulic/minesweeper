@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
+
 export interface GameBoardState {
   value: number[][];
   status: 'idle' | 'loading' | 'failed';
