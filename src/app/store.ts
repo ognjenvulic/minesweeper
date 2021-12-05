@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import counterReducer from '../features/counter/counterSlice';
+import gameBoardReducer from '../features/gameBoard/gameBoardSlice';
 import reduxWebsocket from '@giantmachines/redux-websocket';
 import { connect, send } from '@giantmachines/redux-websocket';
 
@@ -25,6 +26,7 @@ const reduxWebsocketMiddleware = reduxWebsocket({
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    gameBoardSlice: gameBoardReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
