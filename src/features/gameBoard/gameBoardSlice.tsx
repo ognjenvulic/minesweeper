@@ -10,7 +10,7 @@ export interface GameBoardState {
 
 const initialState: GameBoardState = {
   value: [[]],
-  level: 0,
+  level: 1,
   status: 'idle',
 };
 
@@ -18,7 +18,6 @@ export const gameBoardSlice = createSlice({
   name: 'gameBoard',
   initialState,
   reducers: {
-    // Use the PayloadAction type to declare the contents of `action.payload`
     setGameBoardValue: (state, action: PayloadAction<string[][]>) => {
       state.value = action.payload;
     },
@@ -28,7 +27,7 @@ export const gameBoardSlice = createSlice({
   },
 });
 
-export const { setGameBoardValue } = gameBoardSlice.actions;
+export const { setGameBoardValue, setGameLevel } = gameBoardSlice.actions;
 
 export const selectGameBoardState = (state: RootState) => state.gameBoardSlice.value;
 export const selectGameBoardLevel = (state: RootState) => state.gameBoardSlice.level;

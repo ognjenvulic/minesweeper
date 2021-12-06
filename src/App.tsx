@@ -1,12 +1,11 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-// import Typography from '@mui/material/Typography';
 import { GameBoard } from './features/gameBoard/GameBoard';
 import { AppBar, Typography, Toolbar, Link } from '@mui/material';
 
 function App() {
   return (
-    <Container>
+    <Container maxWidth={false}>
       <AppBar position='static'>
         <Toolbar sx={{ justifyContent: 'space-between'}}>
           <Typography variant='h6' color='inherit' component='div'>

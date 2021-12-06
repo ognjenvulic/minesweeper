@@ -1,10 +1,13 @@
-import { take, put, delay } from 'redux-saga/effects';
+import { take, actionChannel, put, delay, ActionPattern } from 'redux-saga/effects';
 import { send } from '@giantmachines/redux-websocket';
 import { setGameBoardValue } from './gameBoardSlice';
+import { Action } from 'redux';
 
 export default function* updateBoard() {
+  const reqChan:ActionPattern<Action<any>> | undefined = yield actionChannel('REDUX_WEBSOCKET::MESSAGE');
+  
   while (true) {
-    const { payload } = yield take('REDUX_WEBSOCKET::MESSAGE');
+    const { payload } = yield take(reqChan);
 
     if (payload?.message?.indexOf('map:') !== -1) {
       let boardState: string[][] = [];
@@ -21,8 +24,8 @@ export default function* updateBoard() {
     } else if (payload?.message?.indexOf('open:') !== -1) {
       if (payload?.message?.indexOf('You lose') !== -1) {
         yield put(send('map'));
-        yield delay(1000);
-        yield put(send('new 1'));
+        //yield delay(1000);
+        //yield put(send('new 1'));
       }
       yield put(send('map'));
     }
