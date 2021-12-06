@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-
+type boardStatus = 'idle' | 'loading' | 'win' | 'lose' | 'error';
 export interface GameBoardState {
   value: string[][];
   level: number;
-  status: 'idle' | 'loading' | 'failed';
+  status: boardStatus;
 }
 
 const initialState: GameBoardState = {
-  value: [[]],
+  value: [],
   level: 1,
   status: 'idle',
 };
@@ -24,12 +24,16 @@ export const gameBoardSlice = createSlice({
     setGameLevel: (state, action: PayloadAction<number>) => {
       state.level = action.payload;
     },
+    setGameBoardStatus: (state, action: PayloadAction<boardStatus>) => {
+      state.status = action.payload;
+    },
   },
 });
 
-export const { setGameBoardValue, setGameLevel } = gameBoardSlice.actions;
+export const { setGameBoardValue, setGameLevel, setGameBoardStatus } = gameBoardSlice.actions;
 
 export const selectGameBoardState = (state: RootState) => state.gameBoardSlice.value;
 export const selectGameBoardLevel = (state: RootState) => state.gameBoardSlice.level;
+export const selectGameBoardStatus = (state: RootState) => state.gameBoardSlice.status;
 
 export default gameBoardSlice.reducer;

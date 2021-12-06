@@ -2,9 +2,10 @@ import React from 'react';
 import { Box, Paper } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { send } from '@giantmachines/redux-websocket';
-import { selectGameBoardState, selectGameBoardLevel, setGameLevel } from './gameBoardSlice';
+import { selectGameBoardState, selectGameBoardLevel, setGameLevel, setGameBoardStatus } from './gameBoardSlice';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import GameStatus from './GameStatus';
 
 export function GameBoard() {
   const gameBoardState = useAppSelector(selectGameBoardState);
@@ -21,7 +22,9 @@ export function GameBoard() {
             <Button
               key={level}
               variant={gameLevel === level ? "contained" : "outlined"}
-              onClick={() => {dispatch(setGameLevel(level))}}
+              onClick={() => {
+                dispatch(setGameLevel(level));
+              }}
             >{`Level ${level}`}</Button>
           ))}
         </ButtonGroup>
@@ -29,10 +32,14 @@ export function GameBoard() {
         <Button
           sx={{ m: 1 }}
           variant="outlined"
-          onClick={() => dispatch(send(`new ${gameLevel}`))}
+          onClick={() => {
+            dispatch(setGameBoardStatus("loading"));
+            dispatch(send(`new ${gameLevel}`));
+          }}
         >
           {`Start New Game Level ${gameLevel}`}
         </Button>
+        <GameStatus />
       </Box>
       <Box>
         {gameBoardState.map((el, indexX) => {
@@ -56,10 +63,11 @@ export function GameBoard() {
                     }}
                     onClick={() => {
                       console.log(indexX, indexY);
+                      dispatch(setGameBoardStatus("loading"));
                       dispatch(send(`open ${indexY} ${indexX}`));
                     }}
                   >
-                    {gameBoardState[indexX][indexY]}
+                    {fl}
                   </Paper>
                 );
               })}
