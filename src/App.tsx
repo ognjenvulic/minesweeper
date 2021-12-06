@@ -6,7 +6,7 @@ import { AppBar, Typography, Toolbar, Link } from '@mui/material';
 
 function App() {
   return (
-    <Container maxWidth='md'>
+    <Container>
       <AppBar position='static'>
         <Toolbar sx={{ justifyContent: 'space-between'}}>
           <Typography variant='h6' color='inherit' component='div'>

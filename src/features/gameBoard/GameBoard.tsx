@@ -2,26 +2,26 @@ import React from 'react';
 import { Box, Paper } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { send } from '@giantmachines/redux-websocket';
-import { setGameBoardValue, selectGameBoardState } from './gameBoardSlice';
+import { selectGameBoardState } from './gameBoardSlice';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+
 export function GameBoard() {
-  //const [fields,] = useState([[0,0,0],[0,0,0],[0,0,0]]);
   const gameBoardState = useAppSelector(selectGameBoardState);
   const dispatch = useAppDispatch();
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+      <Box sx={{ display: 'flex', flexFlow:'column', alignItems: 'center', p: 2 }}>
         <ButtonGroup variant='outlined' aria-label='outlined button group'>
-          <Button onClick={() => dispatch(send('new 1'))}>Level 1</Button>
+          <Button variant='contained' onClick={() => dispatch(send('new 1'))}>Level 1</Button>
           <Button onClick={() => dispatch(send('new 2'))}>Level 2</Button>
           <Button onClick={() => dispatch(send('new 3'))}>Level 3</Button>
           <Button onClick={() => dispatch(send('new 4'))}>Level 4</Button>
         </ButtonGroup>
-        <ButtonGroup variant='outlined' aria-label='outlined button group'>
-          <Button onClick={() => dispatch(send('map'))}>Refresh</Button>
-        </ButtonGroup>
+        
+        <Button sx={{ m:1 }} variant='outlined' onClick={() => dispatch(send('map'))}>Load</Button>
+        
       </Box>
       <Box>
         {gameBoardState.map((el, indexX) => {
@@ -37,8 +37,8 @@ export function GameBoard() {
                     key={indexY}
                     sx={{
                       m: '1px',
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       display: 'flex',
                       justifyContent: 'center',
                       cursor: 'pointer',
