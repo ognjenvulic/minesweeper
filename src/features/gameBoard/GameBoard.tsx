@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { send } from '@giantmachines/redux-websocket';
 import { selectGameBoardState, selectGameBoardLevel, setGameLevel, setGameBoardStatus } from './gameBoardSlice';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import GameStatus from './GameStatus';
+import { GameFieldMemoized } from "./GameField";
 
 export function GameBoard() {
   const gameBoardState = useAppSelector(selectGameBoardState);
@@ -48,32 +49,16 @@ export function GameBoard() {
               key={indexX}
               sx={{ display: "flex", justifyContent: "center" }}
             >
-              {el.map((fl, indexY) => {
-                return (
-                  <Paper
-                    elevation={5}
-                    key={indexY}
-                    sx={{
-                      m: "1px",
-                      width: 25,
-                      height: 25,
-                      display: "flex",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      dispatch(setGameBoardStatus("loading"));
-                      dispatch(send(`open ${indexY} ${indexX}`));
-                    }}
-                    onContextMenu={(e)=> {
-                      e.preventDefault();
-                      alert('Marking mines is not supported at the moment (just dont open the one with bombs).')
-                    }}
-                  >
-                    {fl}
-                  </Paper>
-                );
-              })}
+              {el.map((fl, indexY) => (
+                <GameFieldMemoized
+                  key={indexY}
+                  value={fl}
+                  onClick={() => {
+                    dispatch(setGameBoardStatus("loading"));
+                    dispatch(send(`open ${indexY} ${indexX}`));
+                  }}
+                />
+              ))}
             </Box>
           );
         })}
