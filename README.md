@@ -1,12 +1,12 @@
 # minesweeper
 This is well known and fun game. The board is divided into cells, with mines randomly distributed. To win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it. Using this information, you can determine cells that are safe, and cells that contain mines.
 
-##Demo
+## Demo
 
-Demo is available on [minesweeperogi - Heroku] (https://minesweeperogi.herokuapp.com/). 
+Demo is available on [minesweeperogi - Heroku] (https://minesweeperogi.herokuapp.com/). Be aware of very slow initial load since this is a free version (https://devcenter.heroku.com/articles/dynos#dyno-sleeping).
 ## Tech Stack
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/) template and [Saga Middleware](https://redux-saga.js.org/). For handling WebSocket communication [redux-websocket](https://github.com/giantmachines/redux-websocket) was used and for Handling UI [Material UI](https://mui.com/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/) template and [Saga Middleware](https://redux-saga.js.org/). For handling WebSocket communication [redux-websocket](https://github.com/giantmachines/redux-websocket) was used and for Handling UI [Material UI](https://mui.com/). For testing the [Jest](https://jestjs.io/docs/tutorial-react) is used.
 
 ## Available Scripts
 

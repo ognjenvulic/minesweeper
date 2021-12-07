@@ -6,7 +6,7 @@ interface GameFieldProps {
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
-function GameField(props: GameFieldProps) {
+export default function GameField(props: GameFieldProps) {
   const {
     value,
     onClick

@@ -34,6 +34,5 @@ export default function* minesweeperWebSocket() {
       }
       yield put(send('map'));
     }
-    console.log(payload?.message);
   }
 }
