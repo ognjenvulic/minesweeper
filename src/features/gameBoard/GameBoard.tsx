@@ -62,9 +62,12 @@ export function GameBoard() {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      console.log(indexX, indexY);
                       dispatch(setGameBoardStatus("loading"));
                       dispatch(send(`open ${indexY} ${indexX}`));
+                    }}
+                    onContextMenu={(e)=> {
+                      e.preventDefault();
+                      alert('Marking mines is not supported at the moment (just dont open the one with bombs).')
                     }}
                   >
                     {fl}

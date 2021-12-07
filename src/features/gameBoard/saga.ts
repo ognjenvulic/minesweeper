@@ -27,6 +27,8 @@ export default function* minesweeperWebSocket() {
     } else if (payload?.message?.indexOf('open:') !== -1) {
       if (payload?.message?.indexOf('You lose') !== -1) {
         yield put(setGameBoardStatus('lose'));
+      } else if (payload?.message?.indexOf('You win') !== -1) {
+        yield put(setGameBoardStatus('win'));
       } else {
         yield put(setGameBoardStatus('idle'));
       }
