@@ -10,12 +10,14 @@ describe('gameBoard reducer', () => {
     value: [],
     level: 1,
     status: 'idle',
+    markedBombs:[]
   };
   it('should handle initial state', () => {
     expect(counterReducer(undefined, { type: 'unknown' })).toEqual({
       value: [],
       level: 1,
       status: 'idle',
+      markedBombs: []
     });
   });
 

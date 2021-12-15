@@ -2,7 +2,16 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { send } from '@giantmachines/redux-websocket';
-import { selectGameBoardState, selectGameBoardLevel, setGameLevel, setGameBoardStatus } from './gameBoardSlice';
+import {
+  selectGameBoardState,
+  selectGameBoardLevel,
+  setGameLevel,
+  setGameBoardStatus,
+  selectMarkedBombs,
+  markBomb,
+  unMarkBomb,
+  clearMarkedBombs
+} from "./gameBoardSlice";
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import GameStatus from './GameStatus';
@@ -11,6 +20,7 @@ import { GameFieldMemoized } from "./GameField";
 export function GameBoard() {
   const gameBoardState = useAppSelector(selectGameBoardState);
   const gameLevel = useAppSelector(selectGameBoardLevel);
+  const markedBombs = useAppSelector(selectMarkedBombs);
   const dispatch = useAppDispatch();
 
   return (
@@ -36,6 +46,7 @@ export function GameBoard() {
           onClick={() => {
             dispatch(setGameBoardStatus("loading"));
             dispatch(send(`new ${gameLevel}`));
+            dispatch(clearMarkedBombs());
           }}
         >
           {`Start New Game Level ${gameLevel}`}
@@ -53,9 +64,16 @@ export function GameBoard() {
                 <GameFieldMemoized
                   key={indexY}
                   value={fl}
+                  marked={markedBombs.indexOf(`${indexY},${indexX}`)!==-1}
                   onClick={() => {
                     dispatch(setGameBoardStatus("loading"));
                     dispatch(send(`open ${indexY} ${indexX}`));
+                  }}
+                  onRightClick={(e)=> {
+                    e.preventDefault();
+                    markedBombs.indexOf(`${indexY},${indexX}`)!==-1 ?
+                    dispatch(unMarkBomb([indexY,indexX])) :
+                    dispatch(markBomb([indexY,indexX]));
                   }}
                 />
               ))}

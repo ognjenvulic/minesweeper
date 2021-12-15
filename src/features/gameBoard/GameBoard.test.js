@@ -14,6 +14,7 @@ describe ('Redux connected component.', ()=>{
     store = mockStore({
       gameBoardSlice: {
         value: [[0,0],[0,0]],
+        markedBombs: [],
         level: 1,
         status: 'idle',}
     });

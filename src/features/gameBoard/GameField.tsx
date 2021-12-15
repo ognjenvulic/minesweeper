@@ -3,34 +3,50 @@ import { Paper } from '@mui/material';
 
 interface GameFieldProps {
   value: string;
+  marked: boolean;
   onClick: React.MouseEventHandler<HTMLDivElement>;
+  onRightClick: React.MouseEventHandler<HTMLDivElement>;
+}
+
+const classes = {
+  paper: {
+    m: "1px",
+    width: 25,
+    height: 25,
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+    backgroundColor: "white"
+  },
+  marked: {
+    backgroundColor: "orangered"
+  },
+  oppened: {
+    backgroundColor: "aquamarine"
+  }
 }
 
 export default function GameField(props: GameFieldProps) {
   const {
     value,
-    onClick
+    marked,
+    onClick,
+    onRightClick
   } = props;
   return (
     <Paper
       elevation={5}
       sx={{
-        m: "1px",
-        width: 25,
-        height: 25,
-        display: "flex",
-        justifyContent: "center",
-        cursor: "pointer",
+        ...classes.paper,
+        ...(isNaN(Number(value)) ? {} : classes.oppened),
+        ...(marked ? classes.marked : {}),
       }}
-      onClick={onClick}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        alert(
-          "Marking mines is not supported at the moment (just dont open the one with bombs)."
-        );
+      onClick={(e: any) => {
+        !marked && onClick(e);
       }}
+      onContextMenu={onRightClick}
     >
-      {value}
+      {marked ? "B" : value}
     </Paper>
   );
 }
